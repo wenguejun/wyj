@@ -8,13 +8,11 @@ from py_code import cacl
 import yaml
 
 
-class Test_Demo:
+class Check_Demo:
     res = cacl.Cacl()
 
-    @pytest.mark.first
-    @pytest.mark.dependency(name="add")
     @pytest.mark.parametrize(('a', 'b', 'c'), yaml.safe_load(open(r'../data/data.yaml'))['add'])
-    def test_add(self, cacl_up_down, cmdopt, a, b, c):
+    def check_add(self, cacl_up_down, cmdopt, a, b, c):
         """
         加法
         :param a:
@@ -25,10 +23,8 @@ class Test_Demo:
         print(f'加法{a} + {b}=={c}')
         assert c == self.res.add(a, b)
 
-    @pytest.mark.second
-    @pytest.mark.dependency(name='minus', depends=['add'])
     @pytest.mark.parametrize(('a', 'b', 'c'), yaml.safe_load(open(r'../data/data.yaml'))['minus'])
-    def test_minus(self, cacl_up_down, a, b, c):
+    def check_minus(self, cacl_up_down, a, b, c):
         """
         加法
         :param a:
@@ -38,10 +34,8 @@ class Test_Demo:
         print(f'减法{a} - {b}=={c}')
         assert c == self.res.minus(a, b)
 
-    @pytest.mark.third
-    @pytest.mark.dependency(name="product")
     @pytest.mark.parametrize(('a', 'b', 'c'), yaml.safe_load(open(r'../data/data.yaml'))['product'])
-    def test_product(self, cacl_up_down, a, b, c):
+    def check_product(self, cacl_up_down, a, b, c):
         """
         加法
         :param a:
@@ -51,10 +45,8 @@ class Test_Demo:
         print(f'乘法{a} * {b}=={c}')
         assert c == self.res.product(a, b)
 
-    @pytest.mark.fouth
-    @pytest.mark.dependency(name='div', depends=['product'])
     @pytest.mark.parametrize(('a', 'b', 'c'), yaml.safe_load(open(r'../data/data.yaml'))['div'])
-    def test_div(self, cacl_up_down, a, b, c):
+    def check_div(self, cacl_up_down, a, b, c):
         """
         加法
         :param a:
@@ -66,8 +58,11 @@ class Test_Demo:
 
 
 if __name__ == '__main__':
-    # a =yaml.safe_load(open(r'../data/data.yaml'))['minus']
-    # print(a)
     pass
     # pytest.main(['test_demo.py'])
     # print(yaml.safe_load(open(r'../data/data.yaml'))['add'])
+    # a = yaml.safe_load(open(r'../data/data.yaml'))['minus']
+    # print(a)
+    # print([pytest.param(2,2,4,marks=pytest.mark.dependency(name='add1')),
+    #        pytest.param(2,2,4,marks=pytest.mark.dependency(name='add2')),
+    #        pytest.param(2,2,4,marks=pytest.mark.dependency(name='add3'))])
